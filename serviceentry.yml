@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: internal
+spec:
+  hosts:
+  - postgres.example.com
+  ports:
+  - name: postgres
+    number: 5432
+    protocol: TCP
+  resolution: STATIC # <DNS is preferred
+  endpoints:
+  - address: 127.0.0.1 # <with STATIC
+  exportTo:
+  - .

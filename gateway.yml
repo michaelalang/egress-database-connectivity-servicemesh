@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: egress-gateway
+spec:
+  exportTo:
+  - .
+  selector:
+    istio: egress-gateway
+  servers:
+  - port:
+      number: 5432
+      name: postgres
+      protocol: TCP
+    hosts:
+    - postgres.example.com
