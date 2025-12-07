@@ -149,3 +149,15 @@ psql 'sslmode=require host=postgres.example.com dbname=postgres user=postgres pa
 
 This command will fail if you Postgres Server does not provide SSL capability. 
 tcpdump wise you would still see a `plain-text` establish of the PostgreSQL connection followed by the upgrade with `starttls`. Further communitation will be TLS encrypted or the connection will dropped if SSL chain is not satisfied accordingly.
+
+## Automatic update of ipBlocks in authorizationPolicy
+
+a possible workaround to have more granular access restrictions based upon src ip could be iterating over the endpoints and add the IP addresses of label matching endpoints to the authorizationPolicy ipBlocks section. 
+
+To make such automation we need a Role and RoleBinding granting namespace access to the authorizationpolicies.security restrictions based upon src ip could be iterating over the endpoints and add the IP addresses of label matching endpoints to the authorizationPolicy ipBlocks section. 
+
+To make such automation we need a Role and RoleBinding granting namespace access to the authorizationpolicies.security.istio.io API group as well as the endpoints.
+The included CronJob uses a default oc-client imageStream to retrieve the endpoints and authorizationPolicies of the namespace if the label on the endpoints matches `egress.io/managed=egress-psql` (policy-name). The configMap `updater` holds the oc logic which utilized also python's json module to ensure proper content is going to be injected when patching the authorizationPolicy.
+
+The service `psql-client` is mandatory as otherwise the endpoints will not inherit a label to match for. 
+
