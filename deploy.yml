@@ -20,6 +20,7 @@ spec:
       creationTimestamp: null
       labels:
         app: psql
+        egress.io/managed: egress-postgres
         sidecar.istio.io/inject: 'true'
     spec:
       containers:

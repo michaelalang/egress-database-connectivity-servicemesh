@@ -11,5 +11,9 @@ resources:
 - virtualservice.yml
 - authorizationpolicy.yml
 - service.yml
+- psql-client-service.yml
+- rbac.yml
+- updater-cron.yml
+- updater-cm.yml
 
 namespace: egress-psql
